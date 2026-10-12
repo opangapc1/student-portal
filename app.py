@@ -68,6 +68,18 @@ def admin_add_announcement():
   return redirect(url_for("admin_dashboard"))
 
 
+
+
+# --- Root & Home Route ---
+@app.route("/")
+def home():
+  return jsonify(
+      {"status": "success", "message": "Student Portal API is running live!"}
+  )
+
+
+
+
 # --- Mobile App REST APIs ---
 @app.route("/api/register", methods=["POST"])
 def api_register():
