@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Student Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f4f6f9; color: #333; }
+        h1, h2 { color: #2c3e50; }
+        .card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #007bff; color: white; }
+        input, button { padding: 8px 12px; margin: 5px 0; font-size: 14px; }
+        button { background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button.delete { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>System Admin Portal</h1>
+
+    <div class="card">
+        <h2>Manage Students</h2>
+        <form action="/admin/student/add" method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="text" name="course" placeholder="Course Name">
+            <button type="submit">Add Student</button>
+        </form>
+        <table>
+            <tr><th>ID</th><th>Name</th><th>Email</th><th>Course</th><th>Action</th></tr>
+            {% for s in students %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.email }}</td>
+                <td>{{ s.course }}</td>
+                <td>
+                    <form action="/admin/student/delete/{{ s.id }}" method="POST" style="margin:0;">
+                        <button type="submit" class="delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Post Admin Announcements</h2>
+        <form action="/admin/announcement/add" method="POST">
+            <input type="text" name="title" placeholder="Notice Title" required style="width:100%;"><br>
+            <textarea name="content" placeholder="Notice Content..." required style="width:100%; height:60px;"></textarea><br>
+            <button type="submit">Broadcast Notice</button>
+        </form>
+        <ul>
+            {% for a in announcements %}
+            <li><strong>{{ a.title }}</strong>: {{ a.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
